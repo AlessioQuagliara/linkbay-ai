@@ -1,0 +1,14 @@
+# Core dependencies
+openai>=1.0.0
+pydantic>=2.0.0
+
+# Optional dependencies
+# Install with: pip install linkbay-ai[cache]
+sentence-transformers>=2.0.0  # For semantic cache
+numpy>=1.20.0                 # For embeddings
+
+# Development dependencies (optional)
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+black>=23.0.0
+mypy>=1.0.0

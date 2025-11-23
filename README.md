@@ -1,53 +1,98 @@
-# LinkBay-AI 
+# 🤖 LinkBay-AI Enterprise v0.2.0
 
 [![License](https://img.shields.io/badge/license-MIT-blue)]()
+[![Python](https://img.shields.io/badge/python-3.8+-blue.svg)]()
+[![Status](https://img.shields.io/badge/status-beta-orange)]()
 
-**AI per CMS LinkBay - analizza dati, orchestra lavoro, completa form e genera HTML**
+**AI orchestration library enterprise-ready per CMS LinkBay**
 
-## Indice
+Libreria Python avanzata per orchestrazione AI con multi-provider fallback, budget control, semantic caching, streaming, conversation management, function calling e smart routing.
+
+## ✨ Features Enterprise
+
+### 🔴 Funzionalità Critiche
+- ✅ **Multi-Provider Fallback**: DeepSeek → OpenAI → Local (zero downtime)
+- ✅ **Cost Controller**: Budget tracking, rate limiting, alert automatici
+- ✅ **Semantic Cache**: Cache intelligente basata su similarità semantica
+- ✅ **Streaming Support**: Response streaming per UX ottimale
+
+### 🟡 Funzionalità Importanti
+- ✅ **Prompt Library**: 20+ templates riutilizzabili per task comuni
+- ✅ **Conversation Context**: Gestione conversazioni multi-turn
+- ✅ **Function Calling**: Tool use con 4+ tools predefiniti
+- ✅ **Smart Routing**: Selezione automatica del modello ottimale
+
+## 📋 Indice
 
 - [Installazione](#installazione)
-- [Configurazione](#configurazione)
-- [Utilizzo Rapido](#utilizzo-rapido)
-- [Funzionalità](#funzionalità)
-- [Esempi](#esempi)
+- [Quick Start](#quick-start)
+- [Features Enterprise](#features-enterprise)
+  - [Multi-Provider Fallback](#1-multi-provider-fallback)
+  - [Cost Controller](#2-cost-controller)
+  - [Semantic Cache](#3-semantic-cache)
+  - [Streaming](#4-streaming)
+  - [Prompt Library](#5-prompt-library)
+  - [Conversation Context](#6-conversation-context)
+  - [Function Calling](#7-function-calling)
+  - [Smart Routing](#8-smart-routing)
+- [Esempi Completi](#esempi)
 - [Licenza](#licenza)
 
-## Installazione
+## 📦 Installazione
 
 ```bash
-pip install git+https://github.com/AlessioQuagliara/linkbay_ai.git
+# Installazione base
+pip install git+https://github.com/AlessioQuagliara/linkbay-ai.git
+
+# Con semantic cache (opzionale ma consigliato)
+pip install git+https://github.com/AlessioQuagliara/linkbay-ai.git[cache]
+# oppure
+pip install sentence-transformers
 ```
 
-## Configurazione
+## ⚡ Quick Start
 
-from linkbay_ai import DeepSeekProvider, ProviderConfig
-
-# Configura il provider DeepSeek
-
-```bash
-config = ProviderConfig(
-    api_key="tuo-api-key-deepseek",
-    base_url="https://api.deepseek.com"
+```python
+import asyncio
+from linkbay_ai import (
+    AIOrchestrator,
+    DeepSeekProvider,
+    OpenAIProvider,
+    ProviderConfig,
+    BudgetConfig
 )
 
-provider = DeepSeekProvider(config)
-```
-## utilizzo-rapido
+async def main():
+    # Configura orchestrator
+    ai = AIOrchestrator(
+        budget_config=BudgetConfig(max_tokens_per_hour=100000),
+        enable_cache=True,
+        enable_tools=True
+    )
+    
+    # Registra provider con fallback
+    deepseek_config = ProviderConfig(
+        api_key="your-deepseek-key",
+        base_url="https://api.deepseek.com",
+        priority=1
+    )
+    openai_config = ProviderConfig(
+        api_key="your-openai-key", 
+        base_url="https://api.openai.com/v1",
+        priority=2  # Fallback
+    )
+    
+    ai.register_provider(DeepSeekProvider(deepseek_config), priority=1)
+    ai.register_provider(OpenAIProvider(openai_config), priority=2)
+    
+    # Chat con tutte le features
+    response = await ai.chat("Traduci 'Hello' in italiano")
+    print(response.content)  # "Ciao"
+    
+    # Vedi analytics
+    print(ai.get_analytics())
 
-```bash
-from linkbay_ai import AIOrchestrator, DeepSeekProvider, ProviderConfig
-
-# Setup
-config = ProviderConfig(api_key="tuo-key", base_url="https://api.deepseek.com")
-provider = DeepSeekProvider(config)
-
-ai = AIOrchestrator()
-ai.register_provider("deepseek", provider)
-
-# Chat semplice
-risposta = ai.chat("Ciao, come stai?")
-print(risposta)
+asyncio.run(main())
 ```
 
 ## Funzionalità
