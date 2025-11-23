@@ -1,4 +1,4 @@
-# 🤖 LinkBay-AI Enterprise v0.2.0
+# 🤖 LinkBay-AI v0.2.0
 
 [![License](https://img.shields.io/badge/license-MIT-blue)]()
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)]()
@@ -8,21 +8,21 @@
 
 Libreria Python avanzata per orchestrazione AI con multi-provider fallback, budget control, semantic caching, streaming, conversation management, function calling e smart routing.
 
-## ✨ Features Enterprise
+##  Features
 
-### 🔴 Funzionalità Critiche
-- ✅ **Multi-Provider Fallback**: DeepSeek → OpenAI → Local (zero downtime)
-- ✅ **Cost Controller**: Budget tracking, rate limiting, alert automatici
-- ✅ **Semantic Cache**: Cache intelligente basata su similarità semantica
-- ✅ **Streaming Support**: Response streaming per UX ottimale
+###  Funzionalità Critiche
+- **Multi-Provider Fallback**: DeepSeek → OpenAI → Local (zero downtime)
+- **Cost Controller**: Budget tracking, rate limiting, alert automatici
+- **Semantic Cache**: Cache intelligente basata su similarità semantica
+- **Streaming Support**: Response streaming per UX ottimale
 
-### 🟡 Funzionalità Importanti
-- ✅ **Prompt Library**: 20+ templates riutilizzabili per task comuni
-- ✅ **Conversation Context**: Gestione conversazioni multi-turn
-- ✅ **Function Calling**: Tool use con 4+ tools predefiniti
-- ✅ **Smart Routing**: Selezione automatica del modello ottimale
+###  Funzionalità Importanti
+- **Prompt Library**: 20+ templates riutilizzabili per task comuni
+- **Conversation Context**: Gestione conversazioni multi-turn
+- **Function Calling**: Tool use con 4+ tools predefiniti
+- **Smart Routing**: Selezione automatica del modello ottimale
 
-## 📋 Indice
+##  Indice
 
 - [Installazione](#installazione)
 - [Quick Start](#quick-start)
@@ -38,7 +38,7 @@ Libreria Python avanzata per orchestrazione AI con multi-provider fallback, budg
 - [Esempi Completi](#esempi)
 - [Licenza](#licenza)
 
-## 📦 Installazione
+##  Installazione
 
 ```bash
 # Installazione base
