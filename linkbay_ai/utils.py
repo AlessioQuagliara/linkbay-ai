@@ -1,26 +1,29 @@
 from .core import AIOrchestrator
-from .schemas import GenerationParams
 from typing import Dict, Any, List
 
-def generate_html_tailwind(ai: AIOrchestrator, description: str) -> str:
+async def generate_html_tailwind(ai: AIOrchestrator, description: str) -> str:
+    """Genera HTML Tailwind usando il modello chat rapido."""
     prompt = f"""
     Genera codice HTML con Tailwind CSS per: {description}
     Restituisci SOLO il codice HTML, senza commenti o spiegazioni.
     Usa classi Tailwind per lo styling.
     """
-    return ai.chat(prompt, model="deepseek-chat")
+    response = await ai.chat(prompt, model="deepseek-chat", use_conversation=False)
+    return response.content
 
-def fill_form_fields(ai: AIOrchestrator, user_input: str, fields: List[str]) -> Dict[str, str]:
+async def fill_form_fields(ai: AIOrchestrator, user_input: str, fields: List[str]) -> Dict[str, Any]:
+    """Estrae valori chiave/valore dal testo utente come JSON."""
     prompt = f"""
     Dall'input utente: "{user_input}"
     Estrai i valori per questi campi: {', '.join(fields)}
     Restituisci SOLO un JSON con chiavi: {', '.join(fields)}
     Per campi non trovati, usa null.
     """
-    response = ai.chat(prompt, model="deepseek-chat")
-    return _parse_json_response(response)
+    response = await ai.chat(prompt, model="deepseek-chat", use_conversation=False)
+    return _parse_json_response(response.content)
 
-def analyze_sales_data(ai: AIOrchestrator, csv_data: str) -> str:
+async def analyze_sales_data(ai: AIOrchestrator, csv_data: str) -> str:
+    """Chiede insight sui dati di vendita forniti."""
     prompt = f"""
     Analizza questi dati di vendita e fornisci insights:
     {csv_data}
@@ -30,9 +33,11 @@ def analyze_sales_data(ai: AIOrchestrator, csv_data: str) -> str:
     - Prodotti top
     - Suggerimenti miglioramento
     """
-    return ai.chat(prompt, model="deepseek-reasoning")
+    response = await ai.chat(prompt, model="deepseek-reasoning", use_conversation=False)
+    return response.content
 
-def analyze_traffic_data(ai: AIOrchestrator, log_data: str) -> str:
+async def analyze_traffic_data(ai: AIOrchestrator, log_data: str) -> str:
+    """Analizza i log di traffico e restituisce considerazioni."""
     prompt = f"""
     Analizza questi dati di traffico:
     {log_data}
@@ -42,11 +47,12 @@ def analyze_traffic_data(ai: AIOrchestrator, log_data: str) -> str:
     - Pagine più visitate
     - Problemi prestazioni
     """
-    return ai.chat(prompt, model="deepseek-reasoning")
+    response = await ai.chat(prompt, model="deepseek-reasoning", use_conversation=False)
+    return response.content
 
-def _parse_json_response(response: str) -> Dict[str, str]:
+def _parse_json_response(response: str) -> Dict[str, Any]:
     import json
     try:
         return json.loads(response.strip())
-    except:
-        return {"error": "Failed to parse AI response as JSON"}
+    except Exception:
+        return {"error": "Failed to parse AI response as JSON", "raw": response.strip()}
